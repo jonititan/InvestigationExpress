@@ -1,0 +1,67 @@
+---
+- hosts: cameras
+  user: pi
+  become: yes
+  tasks:
+  - name: "Update Repository cache"
+    apt:
+      update_cache: true
+      cache_valid_time: 3600
+      force_apt_get: true
+
+  - name: Ensure requirements are installed
+    apt:
+      name: 
+      - libatlas-base-dev 
+      - libhdf5-dev 
+      - libhdf5-serial-dev 
+      - libatlas-base-dev 
+      - libjasper-dev  
+      - libqtgui4  
+      - libqt4-test
+      - gstreamer1.0-tools
+      - gstreamer1.0-plugins-ugly
+      - gir1.2-gst-rtsp-server-1.0 
+      - gir1.2-gtk-3.0
+      - libgirepository1.0-dev
+      - libopenjp2-7
+      - libilmbase-dev
+      - libopenexr-dev
+      - git
+      - python3-pip
+      - python3-gi
+      - python3-gi-cairo
+      - python-opencv
+      state: present
+
+  - name: Obtain dai rtsp example
+    git:
+      repo: https://github.com/luxonis/depthai-experiments/
+      dest: /src/depthai-experiments/
+      single_branch: yes
+      version: master 
+
+  - name: Install specified PyGObject
+    pip:
+      name:
+      - pycairo==1.19.1 
+      - PyGObject
+      executable: pip3
+
+  - name: Install specified opencv 
+    pip:
+      name:
+      - opencv-python==4.5.1.48
+      executable: pip3
+
+  - name: Install dai
+    pip:
+      name:
+      - depthai==0.3.0.0+aeda4a9fdef6edc9f826b7dc354a123d1611a7c6
+      executable: pip3
+      extra_args: "--extra-index-url https://artifacts.luxonis.com/artifactory/luxonis-python-snapshot-local/"
+
+  - name: Run RTSP service
+    shell: 
+      cmd: python3 main.py
+      chdir: /src/depthai-experiments/rtsp-streaming
