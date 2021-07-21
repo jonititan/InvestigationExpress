@@ -7,8 +7,9 @@ https://opencv.org/opencv-spatial-ai-competition/
 The rational behind applying spatial AI in an Accident Investigation context is discussed in my blog post for the Cranfield University Safety & Accident investigation Centre.
 https://saiblog.cranfield.ac.uk/blog/ai-in-accident-investigation
 
-Assuming you have raspbian lite and ansible already setup on the raspberry pi's in your Bramble cluster you are then read to creae an inventory file.
-Mine is called Bramble Inventory.
+Assuming you have raspbian lite and ansible already setup on the raspberry pi's in your Bramble cluster you are then read to create an inventory file.
+Mine is called BrambleInventory.  https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
+I put the IP's of the RPi's instead of the URL's
 It has a group of the pi's named cameras in it which this playbook works on.
 
 ansible-playbook -i BrambleInventory daiRTSP.yml
