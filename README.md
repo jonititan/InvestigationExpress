@@ -16,6 +16,7 @@ ansible-playbook -i BrambleInventory daiRTSP.yml
 
 ## Hints
 finding the mac address of your rpi
+
 ip link show dev eth0 | awk ' /link\/ether/ { print $2 }'
 
 changing from password ssh to key ssh
